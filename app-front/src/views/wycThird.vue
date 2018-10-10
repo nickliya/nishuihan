@@ -1,9 +1,9 @@
 <template>
   <div id="skillobm">
-    <a-row>
+    <a-row  type="flex" justify="start">
       <a-col :span="8"><h3>开局五秒会有羽碎</h3></a-col>
     </a-row>
-    <a-row>
+    <a-row  type="flex" justify="start">
       <a-col :span="8"><a-button v-if="isEnd" v-on:click="dostart">开始计时</a-button>
       <a-button v-else v-on:click="doend">结束计时</a-button></a-col>
     </a-row>
