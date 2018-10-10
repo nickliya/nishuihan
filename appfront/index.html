@@ -6,8 +6,9 @@
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" type="text/css" href="https://csshake.surge.sh/csshake.min.css">
     <title>appfront</title>
-    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="src/main.js"></script>
   </head>
   <body>
       <div id="skillobm">
@@ -15,49 +16,14 @@
           <el-button v-if="isEnd" v-on:click="dostart">开始计时</el-button>
           <el-button v-else v-on:click="doend">结束计时</el-button>
         </el-row>
-        <el-row>
-            <!-- <div class="shake"> -->
+        <!-- <el-row>
           <el-tag v-if="yscount>3" type="success">羽碎 {{yscount}}s</el-tag>
           <el-tag v-else type="danger" class="shake shake-constant shake-constant--hover">羽碎 {{yscount}}s</el-tag>
-        <!-- </div> -->
         </el-row>
         <el-row>
           <el-tag v-if="sixDonecount>3" type="success">六点一 {{sixDonecount}}s</el-tag>
           <el-tag v-else type="danger" class="shake shake-constant shake-constant--hover">六点一 {{sixDonecount}}s</el-tag>
-        </el-row>
+        </el-row> -->
       </div>
   </body>
-    <script>
-      var vm=new Vue({
-        el: '#skillobm',
-        data:{
-            sixDonecount:25,
-            yscount: 5,
-            timer: null,
-            isEnd:true,
-        },
-        methods:{
-          dojishi:function(){
-             this.yscount--;
-             this.sixDonecount--;
-             if(this.yscount===0){
-                 this.yscount=30
-             };
-             if(this.sixDonecount===0){
-                 this.sixDonecount=45
-             };
-          },
-          dostart:function(){
-              this.timer = setInterval(this.dojishi,1000);
-              this.isEnd = false
-            },
-          doend:function(){
-              clearInterval(this.timer);
-              this.isEnd = true;
-              this.yscount = 5;
-              this.sixDonecount = 25;
-          }
-          },
-      })
-    </script>
 </html>
