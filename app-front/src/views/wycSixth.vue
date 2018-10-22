@@ -1,5 +1,5 @@
 <template>
-  <div id="skillobm">
+  <div id="wycSixth">
     <a-row>
       <a-col :span="8">
         <h3>6次普攻喷射一次</h3>
@@ -22,7 +22,7 @@ Vue.component(Row.name, Row);
 Vue.component(Col.name, Col);
 
 export default {
-  name: 'wycThird',
+  name: 'wycSixth',
   data() {
     return {
       sixDonecount: 25,
@@ -31,36 +31,8 @@ export default {
       isEnd: true,
     };
   },
-  methods: {
-    dojishi() {
-      this.yscount -= 1;
-      this.sixDonecount -= 1;
-      if (this.yscount === 0) {
-        this.yscount = 30;
-      }
-      if (this.sixDonecount === 0) {
-        this.sixDonecount = 45;
-      }
-    },
-    dostart() {
-      this.timer = setInterval(this.dojishi, 1000);
-      this.isEnd = false;
-    },
-    doend() {
-      clearInterval(this.timer);
-      this.isEnd = true;
-      this.yscount = 5;
-      this.sixDonecount = 25;
-    },
-  },
 };
 </script>
 
 <style lang="less">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
 </style>

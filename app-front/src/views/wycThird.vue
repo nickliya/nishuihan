@@ -1,5 +1,5 @@
 <template>
-  <div id="skillobm">
+  <div id="wycThird">
     <a-row  type="flex" justify="start">
       <a-col :span="8"><h3>开局五秒会有羽碎</h3></a-col>
     </a-row>
@@ -69,10 +69,4 @@ export default {
 </script>
 
 <style lang="less">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
 </style>
