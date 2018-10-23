@@ -1,11 +1,11 @@
 <template>
   <div>
     <a-collapse defaultActiveKey="1" :bordered="false">
-      <a-collapse-panel header="老三 六个职业" key="1">
-        <wycThird></wycThird>
+      <a-collapse-panel header="老一 陈斩槐" key="1">
+        <bossFirst></bossFirst>
       </a-collapse-panel>
-      <a-collapse-panel header="老六 薛狐悲" key="2" :disabled='false'>
-        <wycSixth></wycSixth>
+      <a-collapse-panel header="老二 醉仙" key="2" :disabled='false'>
+        <bossSecond></bossSecond>
       </a-collapse-panel>
     </a-collapse>
   </div>
@@ -13,8 +13,8 @@
 
 <script>
 import { Collapse } from 'ant-design-vue';
-import wycThird from '../components/wuyangcheng/wycThird.vue';
-import wycSixth from '../components/wuyangcheng/wycSixth.vue';
+import bossFirst from '../components/wulin/bossFirst.vue';
+import bossSecond from '../components/wulin/bossSecond.vue';
 
 export default {
   name: 'wyc',
@@ -23,8 +23,8 @@ export default {
     };
   },
   components: {
-    wycThird,
-    wycSixth,
+    bossFirst,
+    bossSecond,
     'a-collapse': Collapse,
     'a-collapse-panel': Collapse.Panel,
   },
