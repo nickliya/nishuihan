@@ -1,5 +1,6 @@
 <template>
   <div>
+    <headNav></headNav>
     <a-collapse defaultActiveKey="1" :bordered="false">
       <a-collapse-panel header="老一 陈斩槐" key="1">
         <bossFirst></bossFirst>
@@ -15,6 +16,7 @@
 import { Collapse } from 'ant-design-vue';
 import bossFirst from '../components/wulin/bossFirst.vue';
 import bossSecond from '../components/wulin/bossSecond.vue';
+import headNav from '../components/headNav.vue';
 
 export default {
   name: 'wyc',
@@ -23,6 +25,7 @@ export default {
     };
   },
   components: {
+    headNav,
     bossFirst,
     bossSecond,
     'a-collapse': Collapse,

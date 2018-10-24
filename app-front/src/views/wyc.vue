@@ -1,5 +1,6 @@
 <template>
   <div>
+    <headNav></headNav>
     <a-collapse defaultActiveKey="1" :bordered="false">
       <a-collapse-panel header="老三 六个职业" key="1">
         <wycThird></wycThird>
@@ -15,6 +16,7 @@
 import { Collapse } from 'ant-design-vue';
 import wycThird from '../components/wuyangcheng/wycThird.vue';
 import wycSixth from '../components/wuyangcheng/wycSixth.vue';
+import headNav from '../components/headNav.vue';
 
 export default {
   name: 'wyc',
@@ -23,6 +25,7 @@ export default {
     };
   },
   components: {
+    headNav,
     wycThird,
     wycSixth,
     'a-collapse': Collapse,
