@@ -1,7 +1,6 @@
 <template>
   <!-- 武林风云录 -->
   <div>
-    <headNav></headNav>
     <a-collapse defaultActiveKey="1" :bordered="false">
       <a-collapse-panel header="老三 六个职业" key="1">
         <wycThird></wycThird>

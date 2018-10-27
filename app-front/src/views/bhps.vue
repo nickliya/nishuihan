@@ -1,7 +1,6 @@
 <template>
   <!-- 跑商 -->
   <div>
-    <headNav></headNav>
     <a-row type='flex' justify="center" align="top">
       <a-col :span="23 ">
         <p>人气商品可购入价：人参4000内 雪莲6500 菊花酒 4000 汴绣6500</p>
