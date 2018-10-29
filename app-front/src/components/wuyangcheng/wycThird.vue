@@ -48,7 +48,7 @@ export default {
       this.yscount -= 1;
       this.sixDonecount -= 1;
       if (this.yscount === 0) {
-        this.yscount = 30;
+        this.yscount = 35;
       }
       if (this.sixDonecount === 0) {
         this.sixDonecount = 45;
