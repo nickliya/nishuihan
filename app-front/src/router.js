@@ -25,5 +25,10 @@ export default new Router({
       name: '跑商',
       component: () => import('./views/bhps.vue'),
     },
+    {
+      path: '/skill/price',
+      name: '技能进阶价格',
+      component: () => import('./views/skillPrice.vue'),
+    },
   ],
 });

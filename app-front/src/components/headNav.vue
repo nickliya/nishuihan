@@ -19,6 +19,14 @@
         </a-menu-item>
       </a-menu-item-group>
     </a-sub-menu>
+    <a-sub-menu>
+      <span slot="title"><a-icon type="appstore" />物价</span>
+      <a-menu-item-group>
+        <a-menu-item key="setting:1">
+          <router-link to="/skill/price">技能进阶</router-link>
+        </a-menu-item>
+      </a-menu-item-group>
+    </a-sub-menu>
   </a-menu>
 </div>
 </template>
