@@ -11,7 +11,63 @@
             "key": "2",
             "skillName": "命蛊修罗",
             "money": "￥42,3000"
-          }]
+          },
+          {
+            "key": "2",
+            "skillName": "失魂蛊经",
+            "money": "￥42,3000"
+          },
+          {
+            "key": "2",
+            "skillName": "摄魂追命",
+            "money": "￥42,3000"
+          },
+          {
+            "key": "2",
+            "skillName": "逐影同尘",
+            "money": "￥42,3000"
+          },
+          {
+            "key": "2",
+            "skillName": "修罗怒",
+            "money": "￥42,3000"
+          },
+          {
+            "key": "2",
+            "skillName": "灵生不息",
+            "money": "￥42,3000"
+          },
+          {
+            "key": "2",
+            "skillName": "万象迷心",
+            "money": "￥42,3000"
+          },
+          {
+            "key": "2",
+            "skillName": "青灯魂骨",
+            "money": "￥42,3000"
+          },
+          {
+            "key": "2",
+            "skillName": "引灵阵",
+            "money": "￥42,3000"
+          },
+          {
+            "key": "2",
+            "skillName": "幽火如昼",
+            "money": "￥42,3000"
+          },
+          {
+            "key": "2",
+            "skillName": "蛊身祭命",
+            "money": "￥42,3000"
+          },
+          {
+            "key": "2",
+            "skillName": "同心一命",
+            "money": "￥42,3000"
+          }
+        ]
     },
     "shenxiang": {
         "name": "神相",
@@ -74,13 +130,39 @@
         "dataindex": [
           {
             "key": "1",
-            "skillName": "霸者横栏",
+            "skillName": "月轮",
             "money": "￥300,000.00"
           }, 
           {
             "key": "2",
-            "skillName": "Jim Green",
+            "skillName": "影摄魂",
             "money": "￥1,256,000.00"
-          }]
+          },
+          {
+            "key": "2",
+            "skillName": "无尽灭",
+            "money": "￥42,3000"
+          },
+          {
+            "key": "2",
+            "skillName": "月影碎空",
+            "money": "￥42,3000"
+          },
+          {
+            "key": "2",
+            "skillName": "流行追月",
+            "money": "￥42,3000"
+          },
+          {
+            "key": "2",
+            "skillName": "黯灭",
+            "money": "￥42,3000"
+          },
+          {
+            "key": "2",
+            "skillName": "命蛊修罗",
+            "money": "￥42,3000"
+          }
+        ]
     }
 }
