@@ -1,7 +1,7 @@
 <template>
   <div id="wlsecond_yx">
     <a-row>
-      <a-col :span="8">
+      <a-col :span="20">
         <h2><strong>hint</strong></h2>
         <h3>1.四坛酒都得喝，不喝BOSS就去喝，喝了就发疯</h3>
         <h3>2.喷泉里面不能用轻功，及时交解控或者跑出来</h3>

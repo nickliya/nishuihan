@@ -1,7 +1,7 @@
 <template>
   <div id="wlsecond_yx">
     <a-row>
-      <a-col :span="10">
+      <a-col :span="20">
         <h2><strong>hint</strong></h2>
         <h3>1.BOSS最后大招新增控制效果，会吸人，所有人必交解控逃跑</h3>
         <h3>2.BOSS会招狗，BOSS和玩家技能均会对狗造成伤害，狗死了BOSS攻击起飞，一刀一个小盆友</h3>

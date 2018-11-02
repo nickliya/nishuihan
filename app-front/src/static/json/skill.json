@@ -1,0 +1,86 @@
+{
+    "jiulin": {
+        "name": "九零",
+        "dataindex": [
+          {
+            "key": "1",
+            "skillName": "如梦令",
+            "money": "￥42,3000"
+          }, 
+          {
+            "key": "2",
+            "skillName": "命蛊修罗",
+            "money": "￥42,3000"
+          }]
+    },
+    "shenxiang": {
+        "name": "神相",
+        "dataindex": [
+          {
+            "key": "1",
+            "skillName": "霸者横栏",
+            "money": "￥300,000.00"
+          }, 
+          {
+            "key": "2",
+            "skillName": "Jim Green",
+            "money": "￥1,256,000.00"
+          }]
+    },
+    "suwen": {
+        "name": "素问",
+        "dataindex": [
+          {
+            "key": "1",
+            "skillName": "霸者横栏",
+            "money": "￥300,000.00"
+          }, 
+          {
+            "key": "2",
+            "skillName": "Jim Green",
+            "money": "￥1,256,000.00"
+          }]
+    },
+    "xuehe": {
+        "name": "血河",
+        "dataindex": [
+          {
+            "key": "1",
+            "skillName": "霸者横栏",
+            "money": "￥300,000.00"
+          }, 
+          {
+            "key": "2",
+            "skillName": "Jim Green",
+            "money": "￥1,256,000.00"
+          }]
+    },
+    "tieyi": {
+        "name": "铁衣",
+        "dataindex": [
+          {
+            "key": "1",
+            "skillName": "霸者横栏",
+            "money": "￥300,000.00"
+          }, 
+          {
+            "key": "2",
+            "skillName": "Jim Green",
+            "money": "￥1,256,000.00"
+          }]
+    },
+    "suimeng": {
+        "name": "碎梦",
+        "dataindex": [
+          {
+            "key": "1",
+            "skillName": "霸者横栏",
+            "money": "￥300,000.00"
+          }, 
+          {
+            "key": "2",
+            "skillName": "Jim Green",
+            "money": "￥1,256,000.00"
+          }]
+    }
+}
