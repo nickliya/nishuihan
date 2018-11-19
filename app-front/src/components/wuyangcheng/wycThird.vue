@@ -4,7 +4,9 @@
       <a-col :span="8"><h3>开局五秒会有羽碎</h3></a-col>
     </a-row>
     <a-row  type="flex" justify="start">
-      <a-col :span="8"><a-button v-if="isEnd" v-on:click="dostart">开始计时</a-button>
+      <a-col :span="8">
+      <audio src="/countdown.mp3" controls="controls" id="audio" hidden></audio>
+      <a-button v-if="isEnd" v-on:click="dostart">开始计时</a-button>
       <a-button v-else v-on:click="doend">结束计时</a-button></a-col>
     </a-row>
     <a-row>
@@ -41,6 +43,7 @@ export default {
       yscount: 5,
       timer: null,
       isEnd: true,
+      audio: null,
     };
   },
   methods: {
@@ -48,22 +51,28 @@ export default {
       this.yscount -= 1;
       this.sixDonecount -= 1;
       if (this.yscount === 0) {
-        this.yscount = 35;
+        this.yscount = 30;
       }
       if (this.sixDonecount === 0) {
         this.sixDonecount = 45;
+      }
+      if (this.yscount===3 || this.sixDonecount===3){
+        this.audio.play();
       }
     },
     dostart() {
       this.timer = setInterval(this.dojishi, 1000);
       this.isEnd = false;
-    },
+      this.audio = document.getElementById('audio')
+   },
     doend() {
       clearInterval(this.timer);
       this.isEnd = true;
       this.yscount = 5;
       this.sixDonecount = 25;
-    },
+      this.audio.pause();
+      this.audio.currentTime = 0;
+    }
   },
 };
 </script>
