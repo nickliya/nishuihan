@@ -5,7 +5,7 @@
     </a-row>
     <a-row  type="flex" justify="start">
       <a-col :span="8">
-      <audio src="/countdown.mp3" controls="controls" id="audio" hidden></audio>
+      <audio :src="mp3url" controls="controls" id="audio" hidden></audio>
       <a-button v-if="isEnd" v-on:click="dostart">开始计时</a-button>
       <a-button v-else v-on:click="doend">结束计时</a-button></a-col>
     </a-row>
@@ -30,6 +30,7 @@
 import Vue from 'vue';
 import { Button, Tag, Row, Col } from 'ant-design-vue';
 
+
 Vue.component(Button.name, Button);
 Vue.component(Tag.name, Tag);
 Vue.component(Row.name, Row);
@@ -39,11 +40,13 @@ export default {
   name: 'wycThird',
   data() {
     return {
+      baseUrl: process.env.BASE_URL,
       sixDonecount: 25,
       yscount: 5,
       timer: null,
       isEnd: true,
       audio: null,
+      mp3url: require("../../assets/countdown.mp3")
     };
   },
   methods: {
