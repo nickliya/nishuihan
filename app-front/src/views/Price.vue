@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <a-button class="editable-add-btn" @click="handleAdd">Add</a-button>
     <a-table bordered :dataSource="dataSource" :columns="columns">
@@ -41,19 +40,21 @@ export default {
   },
   data () {
     return { 
-      dataSource: [{
-        key: '0',
-        date: 'Edward King 0',
-        copperRatio: '32',
-        canbuycopper: 'London, Park Lane no. 0',
-        canbuycopper2: 'London, Park Lane no. 1',
-      }, {
-        key: '1',
-        date: 'Edward King 1',
-        copperRatio: '32',
-        canbuycopper: 'London, Park Lane no. 1',
-        canbuycopper2: 'London, Park Lane no. 1',
-      }],
+      dataSource: [
+    //   {
+    //     key: '0',
+    //     date: 'Edward King 0',
+    //     copperRatio: '32',
+    //     canbuycopper: 'London, Park Lane no. 0',
+    //     canbuycopper2: 'London, Park Lane no. 1',
+    //   }, {
+    //     key: '1',
+    //     date: 'Edward King 1',
+    //     copperRatio: '32',
+    //     canbuycopper: 'London, Park Lane no. 1',
+    //     canbuycopper2: 'London, Park Lane no. 1',
+    //   }
+      ],
       count: 2,
       columns: [{
         title: '日期',
@@ -100,21 +101,35 @@ export default {
       const { count, dataSource } = this
       const newData = {
         key: count,
-        date: `Edward King ${count}`,
-        copperRatio: 32,
-        canbuycopper: `London, Park Lane no. ${count}`,
+        date: '请输入日期',
+        copperRatio: '铜价?',
+        yuanbaoRatio: '元宝?',
       }
       this.dataSource = [...dataSource, newData]
       this.count = count + 1
     }
   },
   mounted () {
-    console.log("一家贼");
-    axios.get()
-    .then()
+    axios.get('http://localhost:8000/getPrice')
+    .then( response => {
+        //  console.log(response.data.message)
+         let data = response.data.message
+         let keycount = 1
+         data.forEach(element => {
+             console.log(element)
+             let datadic = {}
+             datadic["key"] = keycount.toString()
+             datadic["date"] = element["date"]
+             datadic["copperRatio"] = element["copperRatio"].toString()
+             datadic["yuanbaoRatio"] = element["yuanbaoRatio"].toString()
+             this.dataSource.push(datadic)
+             keycount += 1
+         });
+      }
+    )
     .catch(function (error) {
       // handle error
-      console.log(error);
+      console.log(error)
     })
   } 
 }
