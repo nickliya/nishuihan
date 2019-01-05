@@ -25,6 +25,9 @@
         <a-menu-item key="skill">
           <router-link to="/skill/price">技能进阶</router-link>
         </a-menu-item>
+        <a-menu-item key="price">
+          <router-link to="/price">铜币金价</router-link>
+        </a-menu-item>
       </a-menu-item-group>
     </a-sub-menu>
   </a-menu>

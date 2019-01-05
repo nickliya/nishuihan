@@ -1,4 +1,5 @@
 <template>
+  <!-- 技能进阶价格 -->
   <a-table :columns="columns" :dataSource="tableData" bordered>
     <template slot="name" slot-scope="text">
       <a href="javascript:;">{{text}}</a>

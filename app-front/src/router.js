@@ -30,5 +30,10 @@ export default new Router({
       name: '技能进阶价格',
       component: () => import('./views/skillPrice.vue'),
     },
+    {
+      path: '/price',
+      name: '金价价格',
+      component: () => import('./views/Price.vue'),
+    },
   ],
 });
