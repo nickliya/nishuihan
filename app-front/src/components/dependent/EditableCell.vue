@@ -37,13 +37,17 @@ export default {
     handleChange (e) {
       const value = e.target.value
       this.value = value
+      // console.log("handle")
     },
     check () {
       this.editable = false
+      this.$emit('valueChange', this.value)
       this.$emit('change', this.value)
+      // console.log("check")
     },
     edit () {
       this.editable = true
+      // console.log("edit")
     },
   },
 }

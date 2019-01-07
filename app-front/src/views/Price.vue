@@ -2,22 +2,30 @@
   <div>
     <a-button class="editable-add-btn" @click="handleAdd">Add</a-button>
     <a-table bordered :dataSource="dataSource" :columns="columns">
-      <template slot="date" slot-scope="text, record">
-        <editable-cell :text="text" @change="onCellChange(record.key, 'date')"/>
-      </template>
+      <!-- <template slot="date" slot-scope="text, record">
+        <editable-cell :text="text" @change="onCellChange(record.key, 'date')" @valueChange="getChangeValue"/>
+      </template> -->
       <template slot="copperRatio" slot-scope="text, record">
-        <editable-cell :text="text" @change="onCellChange(record.key, 'copperRatio')"/>
+        <editable-cell :text="text" @change="onCellChange(record.key, 'copperRatio')" @valueChange="getChangeValue"/>
       </template>
       <template slot="yuanbaoRatio" slot-scope="text, record">
-        <editable-cell :text="text" @change="onCellChange(record.key, 'yuanbaoRatio')"/>
+        <editable-cell :text="text" @change="onCellChange(record.key, 'yuanbaoRatio')" @valueChange="getChangeValue"/>
       </template>
       <template slot="operation" slot-scope="text, record">
-        <a-popconfirm
-          v-if="dataSource.length"
-          title="Sure to delete?"
-          @confirm="() => onDelete(record.key)">
-          <a href="javascript:;">Delete</a>
-        </a-popconfirm>
+        <div class='editable-row-operations'>
+          <a-popconfirm
+            v-if="dataSource.length"
+            title="Sure to delete?"
+            @confirm="() => onDelete(record.key)">
+            <a href="javascript:;">Delete</a>
+          </a-popconfirm>
+          <a-popconfirm
+            v-if="dataSource.length"
+            title="Sure to delete?"
+            @confirm="() => onSave(record.key)">
+            <a href="javascript:;">Save</a>
+          </a-popconfirm>
+        </div>
       </template>
     </a-table>
   </div>
@@ -32,6 +40,13 @@ import { Table , Popconfirm } from 'ant-design-vue';
 
 const axios = require('axios');
 
+axios.interceptors.request.use((config) => {
+  config.headers['X-Requested-With'] = 'XMLHttpRequest';
+  let regex = /.*csrftoken=([^;.]*).*$/; // 用于从cookie中匹配 csrftoken值
+  config.headers['X-CSRFToken'] = document.cookie.match(regex) === null ? null : document.cookie.match(regex)[1];
+  return config
+})
+
 export default {
   components: {
     EditableCell,
@@ -40,22 +55,8 @@ export default {
   },
   data () {
     return { 
-      dataSource: [
-    //   {
-    //     key: '0',
-    //     date: 'Edward King 0',
-    //     copperRatio: '32',
-    //     canbuycopper: 'London, Park Lane no. 0',
-    //     canbuycopper2: 'London, Park Lane no. 1',
-    //   }, {
-    //     key: '1',
-    //     date: 'Edward King 1',
-    //     copperRatio: '32',
-    //     canbuycopper: 'London, Park Lane no. 1',
-    //     canbuycopper2: 'London, Park Lane no. 1',
-    //   }
-      ],
-      count: 2,
+      dataSource: [],
+      count: 1, //用于存储获取到的行数
       columns: [{
         title: '日期',
         dataIndex: 'date',
@@ -80,57 +81,91 @@ export default {
         dataIndex: 'operation',
         scopedSlots: { customRender: 'operation' },
       }],
+      tableValue: '', //用于存储表格变化的值
+      isNotAdd: false,
     }
   },
   methods: {
-    onCellChange (key, dataIndex) {
-      return (value) => {
-        const dataSource = [...this.dataSource]
-        const target = dataSource.find(item => item.key === key)
-        if (target) {
-          target[dataIndex] = value
-          this.dataSource = dataSource
+    getPrice () {
+      axios.get('http://localhost:8000/getPrice')
+      .then ( response => {
+           console.log("成功get")
+           let data = response.data.message
+           let keycount = 1
+           this.dataSource = [] //从数据库拉所有的列表，所以要本地初始化列表
+           data.forEach(element => {
+               let datadic = {}
+               datadic["key"] = keycount.toString()
+               datadic["date"] = element["date"]
+               datadic["copperRatio"] = element["copperRatio"].toString()
+               datadic["yuanbaoRatio"] = element["yuanbaoRatio"].toString()
+               this.dataSource.push(datadic)
+               keycount += 1
+               this.count = keycount
+           });
         }
-      }
+      )
+      .catch (function (error) {
+        // handle error
+        console.log(error)
+      })
+    },
+    getChangeValue (data) {
+      this.tableValue = data
+    },
+    onCellChange (key, dataIndex) {
+      // console.log(key)
+      // console.log(dataIndex)
+      // console.log(this.tableValue)
+      this.dataSource[(key-1)][dataIndex] = this.tableValue
+      console.log(this.dataSource)
     },
     onDelete (key) {
       const dataSource = [...this.dataSource]
-      this.dataSource = dataSource.filter(item => item.key !== key)
+      axios.post('http://localhost:8000/deletePrice', dataSource[key-1])
+        .then(function (response) {
+          console.log(response);
+          this.getPrice()
+        }.bind(this))
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    onSave (key) {
+      const dataSource = [...this.dataSource]
+      // console.log(dataSource[key-1])
+      // console.log(key)
+      console.log(dataSource[key-1])
+      axios.post('http://localhost:8000/savePrice', dataSource[key-1])
+        .then(function (response) {
+          console.log(response);
+          this.getPrice()
+        }.bind(this))
+        .catch(function (error) {
+          console.log(error);
+        });
     },
     handleAdd () {
       const { count, dataSource } = this
+      let timestamp = new Date()
+      let date = timestamp.getFullYear()+"-"+(timestamp.getMonth()+1)+"-"+timestamp.getDate()
+      let time = timestamp.getHours()+':'+timestamp.getMinutes()+':'+timestamp.getSeconds()
+      console.log(date)
+      console.log(time)
+
       const newData = {
         key: count,
-        date: '请输入日期',
-        copperRatio: '铜价?',
-        yuanbaoRatio: '元宝?',
+        date: date + " " + time,
+        copperRatio: '123',
+        yuanbaoRatio: '456',
       }
       this.dataSource = [...dataSource, newData]
       this.count = count + 1
+      console.log(this.dataSource)
     }
   },
   mounted () {
-    axios.get('http://localhost:8000/getPrice')
-    .then( response => {
-        //  console.log(response.data.message)
-         let data = response.data.message
-         let keycount = 1
-         data.forEach(element => {
-             console.log(element)
-             let datadic = {}
-             datadic["key"] = keycount.toString()
-             datadic["date"] = element["date"]
-             datadic["copperRatio"] = element["copperRatio"].toString()
-             datadic["yuanbaoRatio"] = element["yuanbaoRatio"].toString()
-             this.dataSource.push(datadic)
-             keycount += 1
-         });
-      }
-    )
-    .catch(function (error) {
-      // handle error
-      console.log(error)
-    })
+    this.getPrice()
   } 
 }
 </script>
@@ -176,5 +211,9 @@ export default {
 
 .editable-add-btn {
   margin-bottom: 8px;
+}
+
+.editable-row-operations a {
+  margin-right: 8px;
 }
 </style>
