@@ -9,12 +9,10 @@ import json
 
 
 def savePrice(request):
-    # message = request.POST
     message = request.body
     if message == "":
         return JsonResponse({"resultcode": "1", "message": "传入值为空"})
     jsonMsg = json.loads(message)
-    id = jsonMsg["key"]
     date = jsonMsg["date"]
     copperRatio = jsonMsg["copperRatio"]
     yuanbaoRatio = jsonMsg["yuanbaoRatio"]
@@ -35,12 +33,17 @@ def deletePrice(request):
     jsonMsg = json.loads(message)
     date = jsonMsg["date"]
     try:
-        models.GoldPrice.objects.filter(date=date).delete()
+        data = models.GoldPrice.objects.filter(date=date)
+        if data.exists():
+            data.delete()
+            return JsonResponse({"resultcode": "0", "message": "删除成功"})
+        else:
+            return JsonResponse({"resultcode": "1", "message": "删除成功"})
     except Exception as msg:
         print(msg.message)
         return JsonResponse({"resultcode": "1", "message": "传入参数格式不对"})
 
-    return JsonResponse({"resultcode": "0", "message": "删除成功"})
+
 
 
 def getPrice(request):

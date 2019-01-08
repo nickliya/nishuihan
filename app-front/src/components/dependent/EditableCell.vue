@@ -12,7 +12,7 @@
     />
   </div>
   <div v-else class='editable-cell-text-wrapper'>
-    {{value || ' '}}
+    {{inputtext || ''}}
     <a-icon type='edit' class='editable-cell-icon' @click="edit" />
   </div>
 </div>
@@ -20,16 +20,14 @@
 <script>
 import { Icon, Input } from 'ant-design-vue';
 export default {
-  props: {
-    text: String,
-  },
+  props: ['inputtext'],
   components:{
     'a-icon': Icon,
     'a-input': Input
   },
   data () {
     return {
-      value: this.text,
+      value: this.inputtext,
       editable: false,
     }
   },

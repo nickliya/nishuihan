@@ -6,10 +6,10 @@
         <editable-cell :text="text" @change="onCellChange(record.key, 'date')" @valueChange="getChangeValue"/>
       </template> -->
       <template slot="copperRatio" slot-scope="text, record">
-        <editable-cell :text="text" @change="onCellChange(record.key, 'copperRatio')" @valueChange="getChangeValue"/>
+        <editable-cell :inputtext="text" @change="onCellChange(record.key, 'copperRatio')" @valueChange="getChangeValue"/>
       </template>
       <template slot="yuanbaoRatio" slot-scope="text, record">
-        <editable-cell :text="text" @change="onCellChange(record.key, 'yuanbaoRatio')" @valueChange="getChangeValue"/>
+        <editable-cell :inputtext="text" @change="onCellChange(record.key, 'yuanbaoRatio')" @valueChange="getChangeValue"/>
       </template>
       <template slot="operation" slot-scope="text, record">
         <div class='editable-row-operations'>
@@ -37,7 +37,6 @@ import { Table , Popconfirm } from 'ant-design-vue';
 /*
 * EditableCell Code https://github.com/vueComponent/ant-design-vue/blob/master/components/table/demo/EditableCell.vue
 */
-
 const axios = require('axios');
 
 axios.interceptors.request.use((config) => {
@@ -87,23 +86,29 @@ export default {
   },
   methods: {
     getPrice () {
+      var vue = this
       axios.get('http://localhost:8000/getPrice')
-      .then ( response => {
-           console.log("成功get")
-           let data = response.data.message
-           let keycount = 1
-           this.dataSource = [] //从数据库拉所有的列表，所以要本地初始化列表
-           data.forEach(element => {
-               let datadic = {}
-               datadic["key"] = keycount.toString()
-               datadic["date"] = element["date"]
-               datadic["copperRatio"] = element["copperRatio"].toString()
-               datadic["yuanbaoRatio"] = element["yuanbaoRatio"].toString()
-               this.dataSource.push(datadic)
-               keycount += 1
-               this.count = keycount
-           });
-        }
+      .then (function (response) {
+          let data = response.data.message
+          // console.log(data)
+          let keycount = 1
+          let newDataSource = [] //从数据库拉所有的列表，所以要本地初始化列表
+          data.forEach(element => {
+            let datadic = {}
+            datadic["key"] = keycount.toString()
+            datadic["date"] = element["date"]
+            datadic["copperRatio"] = element["copperRatio"].toString()
+            datadic["yuanbaoRatio"] = element["yuanbaoRatio"].toString()
+            datadic["canbuycopper"] = (element["copperRatio"]*10).toString()
+            datadic["canbuycopper2"] = (10000/element["yuanbaoRatio"]).toString()
+            
+            newDataSource.splice(keycount-1, 1, datadic)
+            keycount += 1
+            this.count = keycount
+          })
+          this.dataSource = newDataSource
+          console.log(this.dataSource)
+        }.bind(this)
       )
       .catch (function (error) {
         // handle error
@@ -114,11 +119,15 @@ export default {
       this.tableValue = data
     },
     onCellChange (key, dataIndex) {
-      // console.log(key)
       // console.log(dataIndex)
-      // console.log(this.tableValue)
-      this.dataSource[(key-1)][dataIndex] = this.tableValue
-      console.log(this.dataSource)
+      this.dataSource[key-1][dataIndex] =this.tableValue
+      if (dataIndex=='copperRatio') {
+        this.dataSource[(key-1)]['canbuycopper'] = this.tableValue * 10
+      }
+      else if (dataIndex == 'yuanbaoRatio') {
+        this.dataSource[(key-1)]['canbuycopper2'] = (10000/this.tableValue)
+      }
+      // console.log(this.dataSource)
     },
     onDelete (key) {
       const dataSource = [...this.dataSource]
@@ -135,7 +144,6 @@ export default {
       const dataSource = [...this.dataSource]
       // console.log(dataSource[key-1])
       // console.log(key)
-      console.log(dataSource[key-1])
       axios.post('http://localhost:8000/savePrice', dataSource[key-1])
         .then(function (response) {
           console.log(response);
@@ -150,18 +158,18 @@ export default {
       let timestamp = new Date()
       let date = timestamp.getFullYear()+"-"+(timestamp.getMonth()+1)+"-"+timestamp.getDate()
       let time = timestamp.getHours()+':'+timestamp.getMinutes()+':'+timestamp.getSeconds()
-      console.log(date)
-      console.log(time)
 
       const newData = {
         key: count,
         date: date + " " + time,
         copperRatio: '123',
-        yuanbaoRatio: '456',
+        yuanbaoRatio: '1.6',
+        canbuycopper: '',
+        canbuycopper2: ''
       }
       this.dataSource = [...dataSource, newData]
       this.count = count + 1
-      console.log(this.dataSource)
+      // console.log(this.dataSource)
     }
   },
   mounted () {
