@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-button class="editable-add-btn" @click="handleAdd">Add</a-button>
-    <a-table bordered :dataSource="dataSource" :columns="columns">
+    <a-table bordered :dataSource="dataSource" :columns="columns" size="small" :pagination="pagination">
       <!-- <template slot="date" slot-scope="text, record">
         <editable-cell :text="text" @change="onCellChange(record.key, 'date')" @valueChange="getChangeValue"/>
       </template> -->
@@ -81,7 +81,7 @@ export default {
         scopedSlots: { customRender: 'operation' },
       }],
       tableValue: '', //用于存储表格变化的值
-      isNotAdd: false,
+      pagination: false
     }
   },
   methods: {
@@ -90,7 +90,6 @@ export default {
       axios.get('http://localhost:8000/getPrice')
       .then (function (response) {
           let data = response.data.message
-          // console.log(data)
           let keycount = 1
           let newDataSource = [] //从数据库拉所有的列表，所以要本地初始化列表
           data.forEach(element => {
@@ -162,10 +161,10 @@ export default {
       const newData = {
         key: count,
         date: date + " " + time,
-        copperRatio: '123',
+        copperRatio: '550',
         yuanbaoRatio: '1.6',
-        canbuycopper: '',
-        canbuycopper2: ''
+        canbuycopper: (550*10).toString(),
+        canbuycopper2: (10000/1.6).toString()
       }
       this.dataSource = [...dataSource, newData]
       this.count = count + 1
