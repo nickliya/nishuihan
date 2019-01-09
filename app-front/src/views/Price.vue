@@ -87,7 +87,7 @@ export default {
   methods: {
     getPrice () {
       var vue = this
-      axios.get('http://localhost:8000/getPrice')
+      axios.get('http://localhost:8010/getPrice')
       .then (function (response) {
           let data = response.data.message
           let keycount = 1
@@ -130,7 +130,7 @@ export default {
     },
     onDelete (key) {
       const dataSource = [...this.dataSource]
-      axios.post('http://localhost:8000/deletePrice', dataSource[key-1])
+      axios.post('http://localhost:8010/deletePrice', dataSource[key-1])
         .then(function (response) {
           console.log(response);
           this.getPrice()
@@ -143,7 +143,7 @@ export default {
       const dataSource = [...this.dataSource]
       // console.log(dataSource[key-1])
       // console.log(key)
-      axios.post('http://localhost:8000/savePrice', dataSource[key-1])
+      axios.post('http://localhost:8010/savePrice', dataSource[key-1])
         .then(function (response) {
           console.log(response);
           this.getPrice()
