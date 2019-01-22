@@ -39,18 +39,18 @@ import { Table , Popconfirm } from 'ant-design-vue';
 */
 const axios = require('axios');
 
-axios.interceptors.request.use((config) => {
-  config.headers['X-Requested-With'] = 'XMLHttpRequest';
-  let regex = /.*csrftoken=([^;.]*).*$/; // 用于从cookie中匹配 csrftoken值
-  config.headers['X-CSRFToken'] = document.cookie.match(regex) === null ? null : document.cookie.match(regex)[1];
-  return config
-})
+// axios.interceptors.request.use((config) => {
+//   config.headers['X-Requested-With'] = 'XMLHttpRequest';
+//   let regex = /.*csrftoken=([^;.]*).*$/; // 用于从cookie中匹配 csrftoken值
+//   config.headers['X-CSRFToken'] = document.cookie.match(regex) === null ? null : document.cookie.match(regex)[1];
+//   return config
+// })
 
 export default {
   components: {
     EditableCell,
     'a-table': Table,
-    'a-popconfirm': Popconfirm
+    'a-popconfirm': Popconfirm,
   },
   data () {
     return { 
@@ -81,7 +81,7 @@ export default {
         scopedSlots: { customRender: 'operation' },
       }],
       tableValue: '', //用于存储表格变化的值
-      pagination: false
+      pagination: {}
     }
   },
   methods: {
@@ -98,15 +98,15 @@ export default {
             datadic["date"] = element["date"]
             datadic["copperRatio"] = element["copperRatio"].toString()
             datadic["yuanbaoRatio"] = element["yuanbaoRatio"].toString()
-            datadic["canbuycopper"] = (element["copperRatio"]*10).toString()
-            datadic["canbuycopper2"] = (10000/element["yuanbaoRatio"]).toString()
+            datadic["canbuycopper"] = (10000/element["yuanbaoRatio"]).toString()
+            datadic["canbuycopper2"] = (element["copperRatio"]*10).toString()
             
             newDataSource.splice(keycount-1, 1, datadic)
             keycount += 1
             this.count = keycount
           })
           this.dataSource = newDataSource
-          console.log(this.dataSource)
+          // console.log(this.dataSource)
         }.bind(this)
       )
       .catch (function (error) {
@@ -121,10 +121,10 @@ export default {
       // console.log(dataIndex)
       this.dataSource[key-1][dataIndex] =this.tableValue
       if (dataIndex=='copperRatio') {
-        this.dataSource[(key-1)]['canbuycopper'] = this.tableValue * 10
+        this.dataSource[(key-1)]['canbuycopper'] = (10000/this.tableValue)
       }
       else if (dataIndex == 'yuanbaoRatio') {
-        this.dataSource[(key-1)]['canbuycopper2'] = (10000/this.tableValue)
+        this.dataSource[(key-1)]['canbuycopper2'] = this.tableValue * 10
       }
       // console.log(this.dataSource)
     },
@@ -134,9 +134,15 @@ export default {
         .then(function (response) {
           console.log(response);
           this.getPrice()
+          if (response.data.resultcode == '0'){
+            this.$message.success(response.data.message)
+          }else{
+            this.$message.error(response.data.message)
+          }
         }.bind(this))
         .catch(function (error) {
           console.log(error);
+          this.$message.success('系统错误')
         });
     },
     onSave (key) {
@@ -161,14 +167,14 @@ export default {
       const newData = {
         key: count,
         date: date + " " + time,
-        copperRatio: '550',
-        yuanbaoRatio: '1.6',
-        canbuycopper: (550*10).toString(),
-        canbuycopper2: (10000/1.6).toString()
+        copperRatio: '1.6',
+        yuanbaoRatio: '550',
+        canbuycopper: (10000/1.6).toString(),
+        canbuycopper2: (550*10).toString()
       }
       this.dataSource = [...dataSource, newData]
       this.count = count + 1
-      // console.log(this.dataSource)
+      console.log(this.dataSource)
     }
   },
   mounted () {

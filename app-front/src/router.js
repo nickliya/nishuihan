@@ -35,5 +35,15 @@ export default new Router({
       name: '金价价格',
       component: () => import('./views/Price.vue'),
     },
+    {
+      path: '/calendar',
+      name: '日历',
+      component: () => import('./views/Calendar.vue'),
+    },
+    {
+      path: '/calendar2',
+      name: '日历2',
+      component: () => import('./views/Calendar2.vue'),
+    },
   ],
 });
